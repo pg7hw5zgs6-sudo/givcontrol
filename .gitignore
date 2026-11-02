@@ -1,0 +1,8 @@
+.venv/
+.pio/
+__pycache__/
+*.pyc
+.DS_Store
+
+# CYD (touchscreen) build is kept locally, not published
+firmware/
