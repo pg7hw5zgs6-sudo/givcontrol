@@ -12,6 +12,11 @@ Open it at `http://givcontrol-c6.local/` or `http://<board IP>/`.
 > your battery charging or discharging as you expect. It is an independent community project and is not
 > affiliated with or endorsed by GivEnergy. Settings are only marked "verified" where they have been
 > tested on a real unit (see below); treat everything else as untested.
+>
+> **No warranty, no support.** This software is provided "as is", without warranty of any kind, express or
+> implied (see sections 15 and 16 of the [licence](LICENSE)). The author accepts no liability for any
+> damage, loss, cost or warranty issue with your inverter, battery or electricity supply arising from its
+> use. There is no support: issues and pull requests are welcome but may not be answered.
 
 ## What you need
 
