@@ -177,6 +177,7 @@ progress{width:100%;height:10px;accent-color:var(--acc)}
  <div id="techbox" hidden><table class="xs" id="regs"></table></div>
  <div id="lockbox"></div>
 </section>
+<p class="mut" style="text-align:center;font-size:13px;margin:18px 0 6px"><b>For the GivEnergy All-in-One V1 only.</b> Not for later All-in-One versions or any other GivEnergy inverter. Provided as is, with no warranty or support.</p>
 </main>
 <script>
 const $=s=>document.querySelector(s);let S=null,dirty=false,PID=0;
@@ -244,7 +245,8 @@ async function load(){
  if(s.controls&&s.undo&&!s.job)bn+='<div class="note" style="margin:0"><a href="#" onclick="run({type:\'undo\'},\'#ures\');return false">Undo last change</a><span class="res" id="ures"></span></div>';
  if(!s.host)bn+=`<div class="banner i">No GivEnergy dongle set yet. ${s.disc.running?'Looking for it on the network… '+Math.round(s.disc.progress/2.54)+'%':'Find it or enter its address in Settings below.'}</div>`;
  else if(s.disc.running)bn+=`<div class="banner i">Looking for GivEnergy dongles on the network… ${Math.round(s.disc.progress/2.54)}%</div>`;
- if(s.ok&&i.valid&&!i.verified)bn+=`<div class="banner w">This is a <b>${esc(i.model)}</b>. GivControl's controls have only been verified on the All-in-One, so everything is <b>read only</b> (not verified for this model).</div>`;
+ if(s.ok&&i.valid&&!i.verified)bn+=`<div class="banner w">This is a <b>${esc(i.model)}</b>. GivControl supports the <b>All-in-One V1 only</b>, so this model is <b>not supported</b> and everything is read only.</div>`;
+ if(s.ok&&i.valid&&i.aio&&!s.controls)bn+='<div class="banner w">GivControl is for the <b>All-in-One V1 only</b>. It can\'t tell a V1 from a later All-in-One: only unlock if yours is a V1.</div>';
  if(s.held)bn+='<div class="banner w">Battery is <b>paused</b> (reserve raised, AC charge off). Use Resume to go back.</div>';
  if(s.chargeNow)bn+='<div class="banner w"><b>Charge now</b> has replaced charge slot 1. Use Restore afterwards.</div>';
  if(s.fw&&s.fw.pending)bn+=`<div class="banner i">New firmware <b>${esc(s.fw.version)}</b> is running and will be kept once Wi-Fi and the inverter answer (within 2 minutes); otherwise the previous firmware comes back automatically.</div>`;
@@ -297,7 +299,7 @@ async function load(){
  fwUI(s);
  const lb=$('#lockbox'),want=s.controls?'on':'off';
  if(lb.dataset.s!=want){lb.dataset.s=want;lb.innerHTML=s.controls?'<div class="f"><div class="l">Controls<div class="h">unlocked: settings can be changed</div></div><button class="sec" onclick="post(\'/api/settings\',{controls:0}).then(load)">Lock</button></div>'
-  :'<div class="f"><div class="l">Controls<div class="h">locked: tick to unlock</div></div><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" onchange="post(\'/api/settings\',{controls:1,manual:1}).then(load).catch(e=>alert(e.message))"> Nothing else is changing the battery settings</label></div>'}
+  :'<div class="f"><div class="l">Controls<div class="h">locked: tick to unlock</div></div><label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" onchange="post(\'/api/settings\',{controls:1,manual:1}).then(load).catch(e=>alert(e.message))"> This is an All-in-One V1 and nothing else is changing the battery settings</label></div>'}
  const ev=await j('/api/events');const dc=['var(--mut)','var(--good)','var(--warn)','var(--bad)'];
  $('#ev').innerHTML=ev.map(e=>`<li><span class="dot" style="background:${dc[e[1]]}"></span><time>${hmT(e[0])}</time><span>${esc(e[2])}</span></li>`).join('')||'<li class="mut">No events yet</li>';
  const lg=(await (await fetch('/api/changes')).text()).trim();

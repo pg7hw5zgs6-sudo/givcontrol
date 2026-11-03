@@ -1,7 +1,13 @@
 # GivControl
 
-A local, cloud-free controller for GivEnergy inverters and batteries, running on a small ESP32-C6 board,
-for owners left without the GivEnergy portal. It talks to your inverter's Wi-Fi dongle over your own
+> [!CAUTION]
+> **GivEnergy All-in-One V1 only.** GivControl is built and tested for the first-generation GivEnergy
+> All-in-One and nothing else. It does **not** support later All-in-One versions, hybrid, AC-coupled,
+> 3-phase or EMS inverters, or the Gateway, and there are no plans to add them. Do not use it on any other
+> GivEnergy system: it may write the wrong settings.
+
+A local, cloud-free controller for the **GivEnergy All-in-One V1** battery, running on a small ESP32-C6
+board, for owners left without the GivEnergy portal. It talks to your inverter's Wi-Fi dongle over your own
 network and gives you a web page with GivTCP-style controls: power flow, eco mode, charge and discharge
 slots, charge/discharge rates, reserve, pause, charge now and clock sync, plus two years of half-hourly
 energy history.
@@ -12,9 +18,6 @@ Open it at `http://givcontrol-c6.local/` or `http://<board IP>/`.
 > your battery charging or discharging as you expect. It is an independent community project and is not
 > affiliated with or endorsed by GivEnergy. Settings are only marked "verified" where they have been
 > tested on a real unit (see below); treat everything else as untested.
->
-> **Only for the original All-in-One (V1).** GivControl has been tested only on a first-generation
-> GivEnergy All-in-One. Later All-in-One versions and other GivEnergy inverters are not supported.
 >
 > **No warranty, no support.** This software is provided "as is", without warranty of any kind, express or
 > implied (see sections 15 and 16 of the [licence](LICENSE)). The author accepts no liability for any
@@ -51,17 +54,20 @@ Open it at `http://givcontrol-c6.local/` or `http://<board IP>/`.
 Status LED: blue = no Wi-Fi / setting up, green = OK, magenta = writing, red = inverter fault or battery
 stopped.
 
-## What works on which inverter
+## Supported inverter: All-in-One V1 only
 
-The model is read from the inverter and shown on the dashboard.
+**Only the first-generation All-in-One is supported.** The model is read from the inverter and shown on
+the dashboard, but the firmware cannot tell an All-in-One V1 from a later All-in-One, so it is up to you to
+make sure yours is a V1. Every other GivEnergy model is unsupported and will not be investigated.
 
 | Model | Readings | Settings you can change |
 |---|---|---|
 | All-in-One V1 | yes | **Verified:** eco mode, AC charge, charge slot 1, discharge slot 1, charge and discharge rate, reserve, pause / charge now, clock sync, serial restore. **Untested** (marked, but editable once unlocked): timed export, charge/discharge slot 2, charge target, export limit, pause mode, extra slots 1-10 |
-| Hybrid, AC-coupled (single phase) | yes (same register map, not checked on a real unit) | none yet: read only |
-| 3-phase, EMS, Gateway | not supported (different register map) | none |
+| Later All-in-One versions | **not supported** | none: do not use |
+| Hybrid, AC-coupled, 3-phase, EMS, Gateway | **not supported** | none |
 
-If you test a setting on your own inverter, please open an issue with the model, firmware and result.
+If you test an untested setting on your own All-in-One V1, please open an issue with the firmware version
+and result.
 
 ## Built-in protection
 
@@ -77,7 +83,8 @@ If you test a setting on your own inverter, please open an issue with the model,
 
 Solar is read directly from the inverter's PV inputs (PV1/PV2 power and today's PV energy). The Solar tile
 appears the first time generation is seen and stays after that; Settings > Solar can also set it to
-Always show or Hide. Systems without solar never see it.
+Always show or Hide. Systems without solar never see it. The All-in-One V1 is AC-coupled with no PV
+inputs of its own, so on most installs the tile stays hidden.
 
 ## Half-hour history (two years)
 
@@ -141,11 +148,12 @@ Reads use function 3 (holding) and 4 (input) in blocks of 60; writes use functio
 time. The dongle relays everyone's traffic (the cloud, GivTCP, Home Assistant), so replies are matched on
 slave, function and base register rather than request order, and garbled all-zero blocks are discarded.
 
-## Future work
+## Limitations
 
-- **All-in-One + Gateway:** a Gateway may hold the grid, home and solar figures for an AIO. It has its own
-  register map; reading it (never writing) is future work.
-- Verifying more settings on Hybrid and AC-coupled models.
+- **All-in-One V1 only.** Other GivEnergy inverters, later All-in-One versions and the Gateway are out of
+  scope and will not be added.
+- An All-in-One paired with a Gateway may report grid, home and solar figures through the Gateway, which
+  GivControl does not read.
 
 ## Licence
 
