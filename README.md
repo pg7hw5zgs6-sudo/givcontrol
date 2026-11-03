@@ -13,6 +13,9 @@ Open it at `http://givcontrol-c6.local/` or `http://<board IP>/`.
 > affiliated with or endorsed by GivEnergy. Settings are only marked "verified" where they have been
 > tested on a real unit (see below); treat everything else as untested.
 >
+> **Only for the original All-in-One (V1).** GivControl has been tested only on a first-generation
+> GivEnergy All-in-One. Later All-in-One versions and other GivEnergy inverters are not supported.
+>
 > **No warranty, no support.** This software is provided "as is", without warranty of any kind, express or
 > implied (see sections 15 and 16 of the [licence](LICENSE)). The author accepts no liability for any
 > damage, loss, cost or warranty issue with your inverter, battery or electricity supply arising from its
@@ -22,7 +25,8 @@ Open it at `http://givcontrol-c6.local/` or `http://<board IP>/`.
 
 - An **ESP32-C6 dev board with 4 MB flash** (tested on an ESP32-C6FH4 board using Espressif's
   `esp32-c6-devkitc-1` definition). The onboard RGB LED on GPIO8 shows status.
-- A GivEnergy inverter with its Wi-Fi/LAN dongle on the same network (TCP port 8899).
+- A **GivEnergy All-in-One V1** (first generation) with its Wi-Fi/LAN dongle on the same network (TCP
+  port 8899). Other models and later AIO versions are not supported.
 - A computer with Python 3 and a USB cable for the first flash.
 
 ## First setup
@@ -53,7 +57,7 @@ The model is read from the inverter and shown on the dashboard.
 
 | Model | Readings | Settings you can change |
 |---|---|---|
-| All-in-One | yes | **Verified:** eco mode, AC charge, charge slot 1, discharge slot 1, charge and discharge rate, reserve, pause / charge now, clock sync, serial restore. **Untested** (marked, but editable once unlocked): timed export, charge/discharge slot 2, charge target, export limit, pause mode, extra slots 1-10 |
+| All-in-One V1 | yes | **Verified:** eco mode, AC charge, charge slot 1, discharge slot 1, charge and discharge rate, reserve, pause / charge now, clock sync, serial restore. **Untested** (marked, but editable once unlocked): timed export, charge/discharge slot 2, charge target, export limit, pause mode, extra slots 1-10 |
 | Hybrid, AC-coupled (single phase) | yes (same register map, not checked on a real unit) | none yet: read only |
 | 3-phase, EMS, Gateway | not supported (different register map) | none |
 
